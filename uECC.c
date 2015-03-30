@@ -30,7 +30,7 @@
     #endif
 #endif
 
-#if (uECC_CURVE == uECC_secp160r1) && (uECC_WORD_SIZE == 8)
+#if (uECC_CURVE == uECC_secp160r1 || uECC_CURVE == uECC_secp384r1) && (uECC_WORD_SIZE == 8)
     #undef uECC_WORD_SIZE
     #define uECC_WORD_SIZE 4
     #if (uECC_PLATFORM == uECC_x86_64)
@@ -87,11 +87,13 @@ typedef int8_t cmpresult_t;
 #define uECC_WORDS_2 24
 #define uECC_WORDS_3 32
 #define uECC_WORDS_4 32
+#define uECC_WORDS_5 48
 
 #define uECC_N_WORDS_1 21
 #define uECC_N_WORDS_2 24
 #define uECC_N_WORDS_3 32
 #define uECC_N_WORDS_4 32
+#define uECC_N_WORDS_5 48
 
 #define Curve_P_1 {0xFF, 0xFF, 0xFF, 0x7F, 0xFF, 0xFF, 0xFF, 0xFF, \
                    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, \
@@ -107,6 +109,13 @@ typedef int8_t cmpresult_t;
                    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, \
                    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, \
                    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}
+#define Curve_P_5 {0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00,  \
+                   0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF,  \
+                   0xFE, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,  \
+                   0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,  \
+                   0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,  \
+                   0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}                   
+
 
 #define Curve_B_1 {0x45, 0xFA, 0x65, 0xC5, 0xAD, 0xD4, 0xD4, 0x81, \
                    0x9F, 0xF8, 0xAC, 0x65, 0x8B, 0x7A, 0xBD, 0x54, \
@@ -122,6 +131,12 @@ typedef int8_t cmpresult_t;
                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, \
                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, \
                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}
+#define Curve_B_5 {0xEF, 0x2A, 0xEC, 0xD3, 0xED, 0xC8, 0x85, 0x2A,  \
+                   0x9D, 0xD1, 0x2E, 0x8A, 0x8D, 0x39, 0x56, 0xC6,  \
+                   0x5A, 0x87, 0x13, 0x50, 0x8F, 0x08, 0x14, 0x03,  \
+                   0x12, 0x41, 0x81, 0xFE, 0x6E, 0x9C, 0x1D, 0x18,  \
+                   0x19, 0x2D, 0xF8, 0xE3, 0x6B, 0x05, 0x8E, 0x98,  \
+                   0xE4, 0xE7, 0x3E, 0xE2, 0xA7, 0x2F, 0x31, 0xB3}
 
 #define Curve_G_1 { \
     {0x82, 0xFC, 0xCB, 0x13, 0xB9, 0x8B, 0xC3, 0x68, \
@@ -158,6 +173,20 @@ typedef int8_t cmpresult_t;
         0x19, 0x54, 0x85, 0xA6, 0x48, 0xB4, 0x17, 0xFD, \
         0xA8, 0x08, 0x11, 0x0E, 0xFC, 0xFB, 0xA4, 0x5D, \
         0x65, 0xC4, 0xA3, 0x26, 0x77, 0xDA, 0x3A, 0x48}}
+        
+#define Curve_G_5 { \
+    {0xB7, 0x0A, 0x76, 0x72, 0x38, 0x5E, 0x54, 0x3A,  \
+        0x6C, 0x29, 0x55, 0xBF, 0x5D, 0xF2, 0x02, 0x55,  \
+        0x38, 0x2A, 0x54, 0x82, 0xE0, 0x41, 0xF7, 0x59,  \
+        0x98, 0x9B, 0xA7, 0x8B, 0x62, 0x3B, 0x1D, 0x6E,  \
+        0x74, 0xAD, 0x20, 0xF3, 0x1E, 0xC7, 0xB1, 0x8E,  \
+        0x37, 0x05, 0x8B, 0xBE, 0x22, 0xCA, 0x87, 0xAA}, \
+    {0x5F, 0x0E, 0xEA, 0x90, 0x7C, 0x1D, 0x43, 0x7A,  \
+        0x9D, 0x81, 0x7E, 0x1D, 0xCE, 0xB1, 0x60, 0x0A,  \
+        0xC0, 0xB8, 0xF0, 0xB5, 0x13, 0x31, 0xDA, 0xE9,  \
+        0x7C, 0x14, 0x9A, 0x28, 0xBD, 0x1D, 0xF4, 0xF8,  \
+        0x29, 0xDC, 0x92, 0x92, 0xBF, 0x98, 0x9E, 0x5D,  \
+        0x6F, 0x2C, 0x26, 0x96, 0x4A, 0xDE, 0x17, 0x36}}
 
 #define Curve_N_1 {0x57, 0x22, 0x75, 0xCA, 0xD3, 0xAE, 0x27, 0xF9, \
                    0xC8, 0xF4, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, \
@@ -172,6 +201,12 @@ typedef int8_t cmpresult_t;
 #define Curve_N_4 {0x41, 0x41, 0x36, 0xD0, 0x8C, 0x5E, 0xD2, 0xBF, \
                    0x3B, 0xA0, 0x48, 0xAF, 0xE6, 0xDC, 0xAE, 0xBA, \
                    0xFE, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, \
+                   0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}  
+#define Curve_N_5 {0x73, 0x29, 0xC5, 0xCC, 0x6A, 0x19, 0xEC, 0xEC,  \
+                   0x7A, 0xA7, 0xB0, 0x48, 0xB2, 0x0D, 0x1A, 0x58,  \
+                   0xDF, 0x2D, 0x37, 0xF4, 0x81, 0x4D, 0x63, 0xC7,  \
+                   0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,  \
+                   0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,  \
                    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}
 
 #elif (uECC_WORD_SIZE == 4)
@@ -192,21 +227,25 @@ typedef int cmpresult_t;
 #define uECC_WORDS_2 6
 #define uECC_WORDS_3 8
 #define uECC_WORDS_4 8
+#define uECC_WORDS_5 12
 
 #define uECC_N_WORDS_1 6
 #define uECC_N_WORDS_2 6
 #define uECC_N_WORDS_3 8
 #define uECC_N_WORDS_4 8
+#define uECC_N_WORDS_5 12
 
 #define Curve_P_1 {0x7FFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF}
 #define Curve_P_2 {0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFE, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF}
 #define Curve_P_3 {0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000000, 0x00000000, 0x00000000, 0x00000001, 0xFFFFFFFF}
 #define Curve_P_4 {0xFFFFFC2F, 0xFFFFFFFE, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF}
+#define Curve_P_5 {0xFFFFFFFF, 0x00000000, 0x00000000, 0xFFFFFFFF, 0xFFFFFFFE, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF}
 
 #define Curve_B_1 {0xC565FA45, 0x81D4D4AD, 0x65ACF89F, 0x54BD7A8B, 0x1C97BEFC}
 #define Curve_B_2 {0xC146B9B1, 0xFEB8DEEC, 0x72243049, 0x0FA7E9AB, 0xE59C80E7, 0x64210519}
 #define Curve_B_3 {0x27D2604B, 0x3BCE3C3E, 0xCC53B0F6, 0x651D06B0, 0x769886BC, 0xB3EBBD55, 0xAA3A93E7, 0x5AC635D8}
 #define Curve_B_4 {0x00000007, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000}
+#define Curve_B_5 {0xD3EC2AEF, 0x2A85C8ED, 0x8A2ED19D, 0xC656398D, 0x5013875A, 0x0314088F, 0xFE814112, 0x181D9C6E, 0xE3F82D19, 0x988E056B, 0xE23EE7E4, 0xB3312FA7}
 
 #define Curve_G_1 { \
     {0x13CBFC82, 0x68C38BB9, 0x46646989, 0x8EF57328, 0x4A96B568}, \
@@ -223,11 +262,16 @@ typedef int cmpresult_t;
 #define Curve_G_4 { \
     {0x16F81798, 0x59F2815B, 0x2DCE28D9, 0x029BFCDB, 0xCE870B07, 0x55A06295, 0xF9DCBBAC, 0x79BE667E}, \
     {0xFB10D4B8, 0x9C47D08F, 0xA6855419, 0xFD17B448, 0x0E1108A8, 0x5DA4FBFC, 0x26A3C465, 0x483ADA77}}
+    
+#define Curve_G_5 { \
+    {0x72760AB7, 0x3A545E38, 0xBF55296C, 0x5502F25D, 0x82542A38, 0x59F741E0, 0x8BA79B98, 0x6E1D3B62, 0xF320AD74, 0x8EB1C71E, 0xBE8B0537, 0xAA87CA22}, \
+    {0x90EA0E5F, 0x7A431D7C, 0x1D7E819D, 0x0A60B1CE, 0xB5F0B8C0, 0xE9DA3113, 0x289A147C, 0xF8F41DBD, 0x9292DC29, 0x5D9E98BF, 0x96262C6F, 0x3617DE4A}}
 
 #define Curve_N_1 {0xCA752257, 0xF927AED3, 0x0001F4C8, 0x00000000, 0x00000000, 0x00000001}
 #define Curve_N_2 {0xB4D22831, 0x146BC9B1, 0x99DEF836, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF}
 #define Curve_N_3 {0xFC632551, 0xF3B9CAC2, 0xA7179E84, 0xBCE6FAAD, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF}
 #define Curve_N_4 {0xD0364141, 0xBFD25E8C, 0xAF48A03B, 0xBAAEDCE6, 0xFFFFFFFE, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF}
+#define Curve_N_5 {0xCCC52973, 0xECEC196A, 0x48B0A77A, 0x581A0DB2, 0xF4372DDF, 0xC7634D81, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF}
 
 #elif (uECC_WORD_SIZE == 8)
 
@@ -249,21 +293,25 @@ typedef int cmpresult_t;
 #define uECC_WORDS_2 3
 #define uECC_WORDS_3 4
 #define uECC_WORDS_4 4
+#define uECC_WORDS_5 6
 
 #define uECC_N_WORDS_1 3
 #define uECC_N_WORDS_2 3
 #define uECC_N_WORDS_3 4
 #define uECC_N_WORDS_4 4
+#define uECC_N_WORDS_5 6
 
 #define Curve_P_1 {0xFFFFFFFF7FFFFFFFull, 0xFFFFFFFFFFFFFFFFull, 0x00000000FFFFFFFFull}
 #define Curve_P_2 {0xFFFFFFFFFFFFFFFFull, 0xFFFFFFFFFFFFFFFEull, 0xFFFFFFFFFFFFFFFFull}
 #define Curve_P_3 {0xFFFFFFFFFFFFFFFFull, 0x00000000FFFFFFFFull, 0x0000000000000000ull, 0xFFFFFFFF00000001ull}
 #define Curve_P_4 {0xFFFFFFFEFFFFFC2Full, 0xFFFFFFFFFFFFFFFFull, 0xFFFFFFFFFFFFFFFFull, 0xFFFFFFFFFFFFFFFFull}
+#define Curve_P_5 {0x00000000FFFFFFFFull, 0xFFFFFFFF00000000ull, 0xFFFFFFFFFFFFFFFEull, 0xFFFFFFFFFFFFFFFFull, 0xFFFFFFFFFFFFFFFFull, 0xFFFFFFFFFFFFFFFFull}
 
 #define Curve_B_1 {0x81D4D4ADC565FA45ull, 0x54BD7A8B65ACF89Full, 0x000000001C97BEFCull}
 #define Curve_B_2 {0xFEB8DEECC146B9B1ull, 0x0FA7E9AB72243049ull, 0x64210519E59C80E7ull}
 #define Curve_B_3 {0x3BCE3C3E27D2604Bull, 0x651D06B0CC53B0F6ull, 0xB3EBBD55769886BCull, 0x5AC635D8AA3A93E7ull}
 #define Curve_B_4 {0x0000000000000007ull, 0x0000000000000000ull, 0x0000000000000000ull, 0x0000000000000000ull}
+#define Curve_B_5 {0x2A85C8EDD3EC2AEFull, 0xC656398D8A2ED19Dull, 0x0314088F5013875Aull, 0x181D9C6EFE814112ull, 0x988E056BE3F82D19ull, 0xB3312FA7E23EE7E4ull}
 
 #define Curve_G_1 { \
     {0x68C38BB913CBFC82ull, 0x8EF5732846646989ull, 0x000000004A96B568ull}, \
@@ -280,11 +328,16 @@ typedef int cmpresult_t;
 #define Curve_G_4 { \
     {0x59F2815B16F81798, 0x029BFCDB2DCE28D9, 0x55A06295CE870B07, 0x79BE667EF9DCBBAC}, \
     {0x9C47D08FFB10D4B8, 0xFD17B448A6855419, 0x5DA4FBFC0E1108A8, 0x483ADA7726A3C465}}
+    
+#define Curve_G_5 { \
+    {0x3A545E3872760AB7ull, 0x5502F25DBF55296Cull, 0x59F741E082542A38ull, 0x6E1D3B628BA79B98ull, 0x8EB1C71EF320AD74ull, 0xAA87CA22BE8B0537ull}, \
+    {0x7A431D7C90EA0E5Full, 0x0A60B1CE1D7E819Dull, 0xE9DA3113B5F0B8C0ull, 0xF8F41DBD289A147Cull, 0x5D9E98BF9292DC29ull, 0x3617DE4A96262C6Full}}
 
 #define Curve_N_1 {0xF927AED3CA752257ull, 0x000000000001F4C8ull, 0x0000000100000000ull}
 #define Curve_N_2 {0x146BC9B1B4D22831ull, 0xFFFFFFFF99DEF836ull, 0xFFFFFFFFFFFFFFFFull}
 #define Curve_N_3 {0xF3B9CAC2FC632551ull, 0xBCE6FAADA7179E84ull, 0xFFFFFFFFFFFFFFFFull, 0xFFFFFFFF00000000ull}
 #define Curve_N_4 {0xBFD25E8CD0364141, 0xBAAEDCE6AF48A03B, 0xFFFFFFFFFFFFFFFE, 0xFFFFFFFFFFFFFFFF}
+#define Curve_N_5 {0xECEC196ACCC52973ull, 0x581A0DB248B0A77Aull, 0xC7634D81F4372DDFull, 0xFFFFFFFFFFFFFFFFull, 0xFFFFFFFFFFFFFFFFull, 0xFFFFFFFFFFFFFFFFull}
 
 #endif /* (uECC_WORD_SIZE == 8) */
 
@@ -1329,7 +1382,133 @@ static void omega_mult(uint64_t * RESTRICT p_result, uint64_t * RESTRICT p_right
 }
 #endif /* uECC_WORD_SIZE */
 
+#elif uECC_CURVE == uECC_secp384r1
+
+#if uECC_WORD_SIZE == 1
+
+static void omega_mult(uint8_t *p_result, uint8_t *p_right)
+{
+    /* Multiply by (2^128 + 2^96 - 2^32 + 1). */
+    vli_set(p_result, p_right); /* 1 */
+    p_result[16 + uECC_WORDS] = vli_add(p_result + 12, p_result + 12, p_right); /* 2^96 + 1 */
+    p_result[17 + uECC_WORDS] = 0;
+    p_result[18 + uECC_WORDS] = 0;
+    p_result[19 + uECC_WORDS] = 0;
+    p_result[20 + uECC_WORDS] = vli_add(p_result + 16, p_result + 16, p_right); /* 2^128 + 2^96 + 1 */
+    p_result[21 + uECC_WORDS] = 0;
+    p_result[22 + uECC_WORDS] = 0;
+    p_result[23 + uECC_WORDS] = 0;
+    if(vli_sub(p_result + 4, p_result + 4, p_right)) /* 2^128 + 2^96 - 2^32 + 1 */
+    { /* Propagate borrow if necessary. */
+        uint32_t i;
+        for(i = 4 + uECC_WORDS; ; ++i)
+        {
+            --p_result[i];
+            if(p_result[i] != 0xff)
+            {
+                break;
+            }
+        }
+    }
+}
+
+/* Computes p_result = p_product % curve_p
+    see PDF "Comparing Elliptic Curve Cryptography and RSA on 8-bit CPUs"
+    section "Curve-Specific Optimizations" */
+static void vli_mmod_fast(uint8_t *p_result, uint8_t *p_product)
+{
+    uint8_t l_tmp[2*uECC_WORDS];
+
+    while(!vli_isZero(p_product + uECC_WORDS)) /* While c1 != 0 */
+    {
+        uint8_t l_carry = 0;
+        uint8_t i;
+
+        vli_clear(l_tmp);
+        vli_clear(l_tmp + uECC_WORDS);
+        omega_mult(l_tmp, p_product + uECC_WORDS); /* tmp = w * c1 */
+        vli_clear(p_product + uECC_WORDS); /* p = c0 */
+
+        /* (c1, c0) = c0 + w * c1 */
+        for(i=0; i<uECC_WORDS+20; ++i)
+        {
+            uint8_t l_sum = p_product[i] + l_tmp[i] + l_carry;
+            if(l_sum != p_product[i])
+            {
+                l_carry = (l_sum < p_product[i]);
+            }
+            p_product[i] = l_sum;
+        }
+    }
+
+    while(vli_cmp(p_product, curve_p) > 0)
+    {
+        vli_sub(p_product, p_product, curve_p);
+    }
+    vli_set(p_result, p_product);
+}
+
+#elif uECC_WORD_SIZE == 4
+
+static void omega_mult(uint32_t *p_result, uint32_t *p_right)
+{
+    /* Multiply by (2^128 + 2^96 - 2^32 + 1). */
+    vli_set(p_result, p_right); /* 1 */
+    p_result[3 + uECC_WORDS] = vli_add(p_result + 3, p_result + 3, p_right); /* 2^96 + 1 */
+    p_result[4 + uECC_WORDS] = vli_add(p_result + 4, p_result + 4, p_right); /* 2^128 + 2^96 + 1 */
+    if(vli_sub(p_result + 1, p_result + 1, p_right)) /* 2^128 + 2^96 - 2^32 + 1 */
+    { /* Propagate borrow if necessary. */
+        uint32_t i;
+        for(i = 1 + uECC_WORDS; ; ++i)
+        {
+            --p_result[i];
+            if(p_result[i] != 0xffffffff)
+            {
+                break;
+            }
+        }
+    }
+}
+
+/* Computes p_result = p_product % curve_p
+    see PDF "Comparing Elliptic Curve Cryptography and RSA on 8-bit CPUs"
+    section "Curve-Specific Optimizations" */
+static void vli_mmod_fast(uint32_t *p_result, uint32_t *p_product)
+{
+    uint32_t l_tmp[2*uECC_WORDS];
+     
+    while(!vli_isZero(p_product + uECC_WORDS)) /* While c1 != 0 */
+    {
+        uint32_t l_carry = 0;
+        uint32_t i;
+        
+        vli_clear(l_tmp);
+        vli_clear(l_tmp + uECC_WORDS);
+        omega_mult(l_tmp, p_product + uECC_WORDS); /* tmp = w * c1 */
+        vli_clear(p_product + uECC_WORDS); /* p = c0 */
+        
+        /* (c1, c0) = c0 + w * c1 */
+        for(i=0; i<uECC_WORDS+5; ++i)
+        {
+            uint32_t l_sum = p_product[i] + l_tmp[i] + l_carry;
+            if(l_sum != p_product[i])
+            {
+                l_carry = (l_sum < p_product[i]);
+            }
+            p_product[i] = l_sum;
+        }
+    }
+    
+    while(vli_cmp(p_product, curve_p) > 0)
+    {
+        vli_sub(p_product, p_product, curve_p);
+    }
+    vli_set(p_result, p_product);
+}
+
+#endif /* uECC_WORD_SIZE */
 #endif /* uECC_CURVE */
+
 #endif /* !asm_mmod_fast */
 
 /* Computes p_result = (p_left * p_right) % curve_p. */

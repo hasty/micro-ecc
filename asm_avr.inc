@@ -1,6 +1,7 @@
 #define DEC_20 19
 #define DEC_24 23
 #define DEC_32 31
+#define DEC_48 47
 
 #define DEC(N) uECC_CONCAT(DEC_, N)
 
@@ -36,6 +37,22 @@
 #define REPEAT_30(stuff) REPEAT_29(stuff) stuff
 #define REPEAT_31(stuff) REPEAT_30(stuff) stuff
 #define REPEAT_32(stuff) REPEAT_31(stuff) stuff
+#define REPEAT_33(stuff) REPEAT_32(stuff) stuff
+#define REPEAT_34(stuff) REPEAT_33(stuff) stuff
+#define REPEAT_35(stuff) REPEAT_34(stuff) stuff
+#define REPEAT_36(stuff) REPEAT_35(stuff) stuff
+#define REPEAT_37(stuff) REPEAT_36(stuff) stuff
+#define REPEAT_38(stuff) REPEAT_37(stuff) stuff
+#define REPEAT_39(stuff) REPEAT_38(stuff) stuff
+#define REPEAT_40(stuff) REPEAT_39(stuff) stuff
+#define REPEAT_41(stuff) REPEAT_40(stuff) stuff
+#define REPEAT_42(stuff) REPEAT_41(stuff) stuff
+#define REPEAT_43(stuff) REPEAT_42(stuff) stuff
+#define REPEAT_44(stuff) REPEAT_43(stuff) stuff
+#define REPEAT_45(stuff) REPEAT_44(stuff) stuff
+#define REPEAT_46(stuff) REPEAT_45(stuff) stuff
+#define REPEAT_47(stuff) REPEAT_46(stuff) stuff
+#define REPEAT_48(stuff) REPEAT_47(stuff) stuff
 
 #define REPEAT(N, stuff) uECC_CONCAT(REPEAT_, N)(stuff)
 
